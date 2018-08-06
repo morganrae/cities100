@@ -16,17 +16,18 @@ cities_data['Latitude'] = 0
 cities_data['Longitude'] = 0
 
 for index, row in cities_data.iterrows():
-  location = (cities_data.loc[index,'City'] + ", " + 
-    cities_data.loc[index,'State'] + ", USA")
+    location = (cities_data.loc[index,'City'] + ", " + 
+        cities_data.loc[index,'State'] + ", USA")
+    cities_data.loc[index,'Location'] = location
 
-  if location not in geocodes.keys(): 
-    print('Missing geocode for ', location, '.')
-  else:
-    geocode = geocodes[location]
-    latitude = geocode[0]['geometry']['location']['lat']
-    longitude = geocode[0]['geometry']['location']['lng']
-    cities_data[index,'Location'] = location
-    cities_data[index,'Latitude'] = latitude
-    cities_data[index,'Longitude'] = longitude
+    if location not in geocodes.keys(): 
+        print('Missing geocode for ', location, '.')
+    else:
+        geocode = geocodes[location]
+        latitude = geocode[0]['geometry']['location']['lat']
+        longitude = geocode[0]['geometry']['location']['lng']
+
+        cities_data.loc[index,'Latitude'] = latitude
+        cities_data.loc[index,'Longitude'] = longitude
   
 cities_data.to_csv('cities_data_clean.csv',encoding='utf-8')
